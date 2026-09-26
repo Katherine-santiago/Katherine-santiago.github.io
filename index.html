@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katherine Santiago — Electrical Engineering Portfolio</title>
+<meta name="description" content="Katherine Santiago — Electrical Engineering student and hardware/embedded systems engineer. PCB design, embedded firmware, Zigbee wireless systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F8FA;
+    --bg-panel: #FFFFFF;
+    --bg-panel-2: #F1F3F6;
+    --text: #20252B;
+    --text-dim: #5B6472;
+    --text-faint: #8A93A0;
+    --copper: #B5652F;
+    --copper-bright: #954F22;
+    --rose: #AE4A67;
+    --teal: #2A6266;
+    --line: rgba(32, 37, 43, 0.12);
+    --line-bright: rgba(32, 37, 43, 0.24);
+    --maxw: 780px;
+    --pad: 24px;
+    font-size: 16px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(rgba(32, 37, 43, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32, 37, 43, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+  }
+
+  a { color: var(--copper-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247, 248, 250, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 16px var(--pad);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    font-size: 0.92rem;
+  }
+  .nav-links a { color: var(--text-dim); }
+  .nav-links a:hover { color: var(--copper-bright); text-decoration: none; }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 560px) {
+    .nav-links { gap: 14px; font-size: 0.85rem; }
+  }
+
+  /* ---------- TRACE MARK (section connector motif) ---------- */
+  .trace-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .trace-mark svg { flex-shrink: 0; }
+  .trace-mark .trace-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 84px 0 72px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-trace {
+    position: absolute;
+    top: -20px;
+    right: -60px;
+    width: 480px;
+    max-width: 60vw;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--teal);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--rose); }
+  .hero .role {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+  .hero p.lede {
+    max-width: 520px;
+    font-size: 1.02rem;
+    color: var(--text);
+    margin-bottom: 30px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    border: 1px solid var(--line-bright);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary {
+    background: var(--copper);
+    border-color: var(--copper);
+    color: #FFFFFF;
+  }
+  .btn-primary:hover { background: var(--copper-bright); border-color: var(--copper-bright); }
+  .btn-ghost { color: var(--text); }
+  .btn-ghost:hover { border-color: var(--copper-bright); color: var(--copper-bright); }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  section h2 { font-size: 1.5rem; margin-bottom: 20px; }
+
+  .about p { max-width: 620px; color: var(--text-dim); font-size: 1.02rem; }
+  .about p + p { margin-top: 14px; }
+  .about strong { color: var(--text); font-weight: 500; }
+
+  /* ---------- FEATURED PROJECTS ---------- */
+  .project {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  .project:last-child { margin-bottom: 0; }
+  .project-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .project h3 {
+    font-size: 1.35rem;
+    margin-bottom: 16px;
+  }
+  .project h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    text-transform: none;
+    color: var(--teal);
+    margin: 22px 0 8px;
+    letter-spacing: 0.02em;
+  }
+  .project h4:first-of-type { margin-top: 0; }
+  .project p { color: var(--text-dim); font-size: 0.96rem; margin: 0; }
+  .project ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    color: var(--text-dim);
+    font-size: 0.96rem;
+  }
+  .project ul li { margin-bottom: 6px; }
+  .skills-row {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .skill-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    border: 1px solid var(--line-bright);
+    border-radius: 3px;
+    padding: 4px 9px;
+  }
+  .image-note {
+    border: 1px dashed var(--line-bright);
+    border-radius: 4px;
+    padding: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* ---------- OTHER PROJECTS GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 620px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+  }
+  .card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--line);
+  }
+  .card-body { padding: 20px; }
+  .card-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+  .card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline { margin-top: 6px; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .tl-item:first-child { border-top: none; }
+  .tl-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    padding-top: 2px;
+  }
+  .tl-role { font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .tl-org { font-size: 0.9rem; color: var(--text-dim); }
+  @media (max-width: 560px) {
+    .tl-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ---------- RESUME ---------- */
+  .resume-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px 28px;
+  }
+  .resume-box p { margin: 4px 0 0; color: var(--text-dim); font-size: 0.92rem; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-list { list-style: none; padding: 0; margin: 0; }
+  .contact-list li {
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .contact-list li:first-child { border-top: none; }
+  .contact-label { color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; }
+
+  footer {
+    padding: 32px var(--pad) 48px;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name">Katherine Santiago</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="hero-trace" viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M470 10 L360 10 L360 70 L300 70 L300 130 L340 130 L340 190 L260 190 L260 250 L200 250 L200 310 L120 310"
+          stroke="#B5652F" stroke-width="2" stroke-linejoin="round" fill="none"/>
+    <path d="M470 60 L410 60 L410 120 L440 120 L440 200 L380 200 L380 280 L320 280 L320 340"
+          stroke="#2A6266" stroke-width="1.5" stroke-linejoin="round" fill="none" opacity="0.7"/>
+    <circle cx="360" cy="10" r="4" fill="#AE4A67"/>
+    <circle cx="300" cy="130" r="4" fill="#AE4A67"/>
+    <circle cx="260" cy="190" r="4" fill="#AE4A67"/>
+    <circle cx="200" cy="310" r="4" fill="#AE4A67"/>
+    <circle cx="410" cy="60" r="3.5" fill="#2A6266"/>
+    <circle cx="440" cy="120" r="3.5" fill="#2A6266"/>
+    <circle cx="380" cy="200" r="3.5" fill="#2A6266"/>
+    <rect x="215" y="130" width="46" height="30" rx="2" stroke="#8A93A0" stroke-width="1.5" fill="none"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-eyebrow mono">Vancouver, BC — Electrical Engineering, UBC</div>
+    <h1>Katherine <span>Santiago</span></h1>
+    <p class="role">Hardware &amp; embedded systems engineering</p>
+    <p class="lede">I design the circuit boards and write the firmware that runs on them. Currently finishing my final year of Electrical Engineering while working part-time as an Electrical Designer at General Fusion.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#work">See my work</a>
+      <a class="btn btn-ghost" href="resume.pdf">Download resume</a>
+      <a class="btn btn-ghost" href="mailto:ksantiagoalvarez31@gmail.com">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">ABOUT</span>
+    </div>
+    <h2>A bit about me</h2>
+    <p>I'm in my final year of <strong>Electrical Engineering at the University of British Columbia</strong>, and currently split my time between school and working part-time as an <strong>Electrical Designer at General Fusion</strong>, where I'm developing a custom Arduino-based breakout board for their fusion facility.</p>
+    <p>Over two co-op terms there, I took a wireless sensor product from a blank schematic through to a facility-wide deployment — designing the PCB, writing the low-power firmware, standing up the network it runs on, and later investigating a suspected EMI failure on a separate board. I like problems that sit at the boundary of hardware and firmware, and I'm currently looking for full-time hardware/embedded roles starting after I graduate in May 2027.</p>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">FEATURED WORK</span>
+    </div>
+    <h2>General Fusion — selected projects</h2>
+
+    <!-- PROJECT 1: ZIGBEE -->
+    <div class="project">
+      <div class="project-meta">General Fusion — Jan 2026 to Aug 2026, Richmond, BC</div>
+      <h3>Battery-Powered Zigbee Wireless Sensor Node</h3>
+
+      <div class="image-note">[ add a photo of the assembled board / enclosure here once cleared for external sharing ]</div>
+
+      <h4>The problem</h4>
+      <p>General Fusion's environmental sensors ran on WiFi and lasted only a few days on a full battery — too short for practical deployment in a facility running periodic plasma shots. The goal was a battery-powered replacement lasting weeks, without sacrificing sampling rate or reliability.</p>
+
+      <h4>Hardware</h4>
+      <p>I designed the sensor PCB in Altium across multiple revisions:</p>
+      <ul>
+        <li>Dual temperature sensing — MAX31856 thermocouple and MAX31865 RTD channels</li>
+        <li>A dual-supply power system: buck-boost battery regulation, with a power-mux fallback to 5V external power</li>
+        <li>A 6-position rotary switch and DIP switch for field-configurable behaviour, driven off an analog input and resistor array</li>
+        <li>A status LED and a custom board outline shaped to fit a 3D-printed enclosure</li>
+      </ul>
+
+      <h4>Firmware</h4>
+      <p>I wrote the low-power Zigbee end-device firmware in C using ESP-IDF, implementing sleep-mode power management that brought the device down to under 1 mA average current draw. I also configured and troubleshot the Zigbee2MQTT coordinator network the devices reported to, resolving RF and reliability issues across a multi-zone deployment.</p>
+
+      <h4>Outcome</h4>
+      <p>The sensor was deployed across the facility. I took part in the design review for the board, and later presented the project to the entire company — over 100 people.</p>
+
+      <div class="skills-row">
+        <span class="skill-chip">Altium Designer</span>
+        <span class="skill-chip">Embedded C / ESP-IDF</span>
+        <span class="skill-chip">Zigbee / Zigbee2MQTT</span>
+        <span class="skill-chip">Power management</span>
+        <span class="skill-chip">Low-power firmware</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: EMI -->
+    <div class="project">
+      <div class="project-meta">General Fusion — 2026, Richmond, BC</div>
+      <h3>Investigating an EMI-Suspected Board Failure</h3>
+
+      <h4>The problem</h4>
+      <p>A fielded optical-trigger board — used to fire LED triggers for the fusion system, on a nanosecond-scale timing budget — started failing intermittently after plasma shots. Some units recovered with a power cycle; others needed the IC replaced. The root cause hadn't been confirmed, but EMI was the leading suspect given the environment.</p>
+
+      <h4>Approach</h4>
+      <p>I was asked to help investigate and harden the design in parallel:</p>
+      <ul>
+        <li>Reviewed the failure pattern and identified latch-up as the leading hypothesis, based on the fact that some units recovered with just a power cycle</li>
+        <li>Designed, soldered, and bench-tested a layered circuit-protection revision — TVS diodes, a fuse, and ferrite filtering — explicitly balanced against the board's nanosecond-scale trigger-timing requirement so the fix wouldn't distort the signal it was protecting</li>
+        <li>Set up an oscilloscope-based EMI test rig to capture transients during live plasma shots, to help pin down the actual cause</li>
+      </ul>
+
+      <h4>Outcome</h4>
+      <p>The protection revision was built and validated on the bench, and the EMI test rig is in place to keep gathering data — the investigation was still ongoing at the end of my co-op. I also took part in the design review for this board.</p>
+
+      <div class="skills-row">
+        <span class="skill-chip">LTspice</span>
+        <span class="skill-chip">Circuit protection (TVS/ferrite/fuse)</span>
+        <span class="skill-chip">Oscilloscope diagnostics</span>
+        <span class="skill-chip">EMI/signal integrity</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">OTHER PROJECTS</span>
+    </div>
+    <h2>School &amp; team projects</h2>
+    <div class="grid">
+
+      <div class="card">
+        <img src="images/sailbot-pcb.png" alt="UBC Sailbot mainframe PCB, showing a green Raspberry Pi HAT with PoE ports">
+        <div class="card-body">
+          <div class="card-meta">Jan 2024 – May 2025 · UBC Sailbot</div>
+          <h4>Sailbot Mainframe PCB</h4>
+          <p>Designed a Raspberry Pi HAT in Altium with PoE power delivery and RS-232 satellite modem communication for an autonomous sailboat's mainframe, verified with an oscilloscope and logic analyzer.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="images/balancing-robot.jpg" alt="Two-wheel self-balancing robot built on a breadboard chassis with an Arduino Nano">
+        <div class="card-body">
+          <div class="card-meta">Jun 2025 · ELEC 391</div>
+          <h4>Two-Wheel Self-Balancing Robot</h4>
+          <p>Built a self-balancing robot on an Arduino Nano 33 BLE Sense with a BMI270 IMU and PID control loop; wrote Bluetooth command firmware and reached stable balance on slopes up to 15°.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="card-meta">Nov 2024 · International collaboration</div>
+          <h4>Solar Cell Workshop</h4>
+          <p>Worked with students from the Fukuoka Institute of Technology to design a DC-DC boost converter charging a 400F supercapacitor from a 0.45V solar cell, applying MPPT concepts for energy harvesting.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="card-meta">Jun 2024 · ELEC 291</div>
+          <h4>Temperature Sensing Control Circuit</h4>
+          <p>Designed a temperature-controlled LED/motor circuit using 555 timers for PWM generation, with no microcontroller. Debugged timing and signal integrity with an oscilloscope and multimeter.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">TIMELINE</span>
+    </div>
+    <h2>Experience</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date mono">Sep 2026 – Present</div>
+        <div><div class="tl-role">Electrical Designer, part-time contract</div><div class="tl-org">General Fusion, Richmond BC</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date mono">Jan 2026 – Aug 2026</div>
+        <div><div class="tl-role">Electrical / Firmware Engineering Co-op</div><div class="tl-org">General Fusion, Richmond BC</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date mono">Jan 2025 – Apr 2025</div>
+        <div><div class="tl-role">Design and Testing Co-op</div><div class="tl-org">HAVEN IAQ, Vancouver BC</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">RESUME</span>
+    </div>
+    <div class="resume-box">
+      <div>
+        <h3 style="font-size:1.1rem;">Full resume (PDF)</h3>
+        <p>Work history, skills, and education in one page.</p>
+      </div>
+      <a class="btn btn-primary" href="resume.pdf">Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="trace-mark">
+      <svg width="28" height="10" viewBox="0 0 28 10"><path d="M0 5 H20" stroke="#B5652F" stroke-width="2"/><circle cx="24" cy="5" r="3.5" fill="#AE4A67"/></svg>
+      <span class="trace-label">CONTACT</span>
+    </div>
+    <h2>Get in touch</h2>
+    <ul class="contact-list">
+      <li><span class="contact-label">Email</span><a href="mailto:ksantiagoalvarez31@gmail.com">ksantiagoalvarez31@gmail.com</a></li>
+      <li><span class="contact-label">LinkedIn</span><a href="https://linkedin.com/in/katherine-santiago-REPLACE" target="_blank" rel="noopener">linkedin.com/in/katherine-santiago-REPLACE</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  Built by Katherine Santiago
+</footer>
+
+</body>
+</html>
