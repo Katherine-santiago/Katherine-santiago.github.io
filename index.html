@@ -113,11 +113,11 @@
   section:last-of-type { border-bottom: none; }
   section h2 { font-size: 1.55rem; margin-bottom: 20px; }
 
-  .about { display: grid; grid-template-columns: 1fr 230px; gap: 36px; align-items: start; }
+  .about-row { display: grid; grid-template-columns: 1fr 230px; gap: 36px; align-items: start; margin-top: 14px; }
   .about-photo { grid-column: 2; grid-row: 1; width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(31, 42, 43, 0.12); }
   .about-text { grid-column: 1; grid-row: 1; }
   @media (max-width: 680px) {
-    .about { grid-template-columns: 1fr; gap: 24px; }
+    .about-row { grid-template-columns: 1fr; gap: 24px; }
     .about-photo { grid-column: 1; grid-row: 2; max-width: 260px; }
     .about-text { grid-row: 1; }
   }
@@ -273,10 +273,12 @@
     </div>
     <h2>A bit about me</h2>
     <div class="about">
-      <img class="about-photo" src="images/katherine.jpg" alt="Katherine Santiago standing outside the General Fusion building" width="720" height="900">
-      <div class="about-text">
-      <p>I'm in my final year of <strong>Electrical Engineering at the University of British Columbia</strong>, and I currently split my time between school and a part-time contract as an <strong>Electrical Designer at General Fusion</strong>, where I'm designing a custom Arduino Portenta breakout board to replace a 64-channel legacy system.</p>
-      <p>During my 8-month co-op there, I took a battery-powered wireless sensor from a blank schematic to a working deployment: I designed the PCB, wrote the low-power firmware, set up the network it reports to, and later helped investigate a suspected EMI failure on a separate board. I like problems that sit at the boundary of hardware and firmware, and I'm looking for full-time hardware and embedded roles starting after I graduate in May 2027.</p>
+      <p>I'm in my final year of <strong>Electrical Engineering at the University of British Columbia</strong>. I enjoy hardware design and I'm looking for full-time hardware and embedded roles starting after I graduate in May 2027.</p>
+      <div class="about-row">
+        <div class="about-text">
+          <p>I'm currently on a part-time contract as an <strong>Electrical Designer at General Fusion</strong>. During my 8-month co-op there, I took a battery-powered wireless sensor from a blank schematic to a working deployment: I designed the PCB, wrote the low-power firmware, set up the network it reports to, and later helped investigate a suspected EMI failure on a separate board.</p>
+        </div>
+        <img class="about-photo" src="images/katherine.jpg" alt="Headshot of Katherine Santiago" width="720" height="696">
       </div>
     </div>
   </div>
@@ -314,7 +316,7 @@
       </div>
 
       <h4>The problem</h4>
-      <p>General Fusion's environmental sensors ran on WiFi and lasted only a few days on a full battery, which is too short for practical deployment in a facility running periodic plasma shots. The goal was a battery-powered replacement that lasts weeks without giving up sampling rate or reliability.</p>
+      <p>General Fusion's environmental sensors ran on WiFi and lasted only a few days on a full battery, which is too short for practical deployment. The goal was a battery-powered replacement that lasts weeks without giving up sampling rate or reliability.</p>
 
       <h4>Hardware</h4>
       <p>I designed the sensor PCB in Altium across three revisions:</p>
@@ -346,14 +348,14 @@
       <h3>Investigating an EMI-Suspected Board Failure</h3>
 
       <h4>The problem</h4>
-      <p>A fielded optical-trigger board, used to fire LED triggers for the fusion system on a nanosecond-scale timing budget, started failing intermittently after plasma shots. Some units recovered with a power cycle; others needed the IC replaced. The root cause hadn't been confirmed, but EMI was the leading suspect given the environment.</p>
+      <p>A fielded optical-trigger board, used to fire LED triggers for the fusion system on a nanosecond-scale timing budget, started showing intermittent faults in the field. The root cause hadn't been confirmed, but EMI was the leading suspect given the environment.</p>
 
       <h4>Approach</h4>
       <p>I was asked to help investigate and harden the design in parallel:</p>
       <ul>
-        <li>Reviewed the failure pattern and identified latch-up as the leading hypothesis, since some units recovered with just a power cycle</li>
+        <li>Reviewed the fault pattern and identified latch-up as a leading hypothesis</li>
         <li>Designed, soldered, and bench-tested a layered circuit-protection revision (TVS diodes, a fuse, and ferrite filtering), balanced against the board's nanosecond-scale trigger timing so the fix wouldn't distort the signal it was protecting</li>
-        <li>Set up an oscilloscope-based EMI test rig to capture transients during live plasma shots</li>
+        <li>Set up an oscilloscope-based EMI test rig to capture transients in the operating environment</li>
       </ul>
 
       <h4>Outcome</h4>
@@ -400,7 +402,7 @@
         <div class="card-body">
           <div class="card-meta">Jun 2025 · ELEC 391</div>
           <h4>Two-Wheel Self-Balancing Robot</h4>
-          <p>Built on an Arduino Nano 33 BLE Sense with a BMI270 IMU, a Kalman filter for tilt estimation, and a PID loop for motor control. Wrote the firmware for Bluetooth control and PID tuning; it holds balance and drives on slopes up to 15°.</p>
+          <p>Built on an Arduino Nano 33 BLE Sense with a BMI270 IMU, a Kalman filter for tilt estimation, and a PID loop for motor control. Team of 3. Helped with the firmware and with tuning the PID values; it holds balance and drives on slopes up to 15°.</p>
         </div>
       </div>
 
@@ -427,7 +429,7 @@
         <div class="card-body">
           <div class="card-meta">Jun 2024 · ELEC 291</div>
           <h4>Temperature Sensing Control Circuit</h4>
-          <p>Designed a temperature-controlled LED and motor circuit using 555 timers for PWM generation. Debugged timing and signal integrity with an oscilloscope and multimeter.</p>
+          <p>Team of 5. Designed a temperature-controlled LED and motor circuit using 555 timers for PWM generation. Debugged timing and signal integrity with an oscilloscope and multimeter.</p>
         </div>
       </div>
 
